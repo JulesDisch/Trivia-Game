@@ -188,6 +188,7 @@ function gameOverModal() {
         $("#trivia-question").empty();
         $("#show-number").empty();
         $("#trivia-question").append("<h2>Final Score" + " </h2>");
+        $("#help").show();
         $("#help").append("<button id= 'start'>Play again?" + " </button>");
         setTimeout(function () {
             j = 0;
@@ -211,6 +212,7 @@ function gameOverModal() {
             $("#trivia-question").empty();
             $("#show-number").empty();
             $("#trivia-question").append("<h2>Final Score" + " </h2>");
+            $("#help").show();
             $("#help").append("<button id= 'start'>Play again?" + " </button>");
             setTimeout(function () {
                 j = 0;
