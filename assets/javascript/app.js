@@ -1,4 +1,3 @@
-
 var triviaChoices = {
     question1: {
         question: "The New York Yankees organization began as the Baltimore Orioles in 1901. In 1903 the team moved to New York and took a new name. What was the new name that the team took in 1903?",
@@ -8,7 +7,8 @@ var triviaChoices = {
             "New York Highlanders",
             "New York Bridges"],
         correctAnswer: "New York Highlanders",
-        picture: "New_York_Highlanders_Baseball_Team,_1903.jpg"
+        picture: "New_York_Highlanders_Baseball_Team,_1903.jpg",
+        answered: false
     },
     question2: {
         question: "Of these great Yankee teams, which team had the most wins in a season?",
@@ -104,9 +104,11 @@ var j = 0;
 var correct = 0;
 var wrong = 0;
 var unanswered = 0;
+var questionsLeft = 10;
 var objKeys = Object.keys(this.triviaChoices);
 
 function restart() {
+    questionsLeft--;
     number = 30;
     $("#show-number").html("<h2>Time Remaining: " + number + "</h2>");
     run();
@@ -118,37 +120,121 @@ function randomize() {
     objKeys.sort(function (a, b) { return 0.5 - Math.random() })
 }
 
-function renderTrivia() {
-    console.log(objKeys[0]);
-    this.triviaUsed = objKeys[j];
-    if (j === 10) {
-        stop();
-        alert("game over");
+$("#countdown").hide();
+
+function timesUpModal() {
+    stop();
+    var timeModal = document.getElementById("Time");
+    var contBtn = document.getElementById("continue");
+    var quitBtn = document.getElementById("quit");
+    timeModal.style.display = "block";
+    contBtn.onclick = function () {
+        timeModal.style.display = "none";
+        $("#buttons").empty();
+        $("#trivia-question").append("<h2> The correct answer is " + triviaChoices[triviaUsed].correctAnswer + "</h2>");
+        $("#trivia-question").append("<img src='assets/images/" + triviaChoices[triviaUsed].picture + "' alt='" + triviaChoices[triviaUsed].correctAnswer + "'>");
+        setTimeout(function () { restart(); }, 2000);
+        unanswered++
+        j++
+    }
+
+    quitBtn.onclick = function () {
+        timeModal.style.display = "none";
+        $("#countdown").hide();
+        $("#trivia-question").text("Ready to play?");
+        $("#buttons").empty();
+        $("#score").empty();
+        $("#help").show();
+        number = 30;
+    }
+}
+
+function gameOverModal() {
+    stop();
+    var overModal = document.getElementById("game-over");
+    var okBtn = document.getElementById("ok");
+    var span = document.getElementsByClassName("close")[0];
+    overModal.style.display = "block";
+    okBtn.onclick = function () {
+        overModal.style.display = "none";
+        $("#countdown").hide();
         $("#correctText").html("<h2>Correct answers: " + correct + "</h2>");
         $("#wrongText").html("<h2>Wrong answers: " + wrong + "</h2>");
         $("#unansweredText").html("<h2>Unanswered: " + unanswered + "</h2>");
-        
-       
+        $("#questionsleftText").html("<h2>Questions left: " + questionsLeft + "</h2>");
         $("#trivia-question").empty();
         $("#show-number").empty();
-        $("#trivia-question").append(
-            "<h2>Final Score" + " </h2>");
-      $("#help").append(
-                "<button id= 'start'>Play again?" + " </button>");
-                setTimeout(function(){
-                j=0;
-                correct=0;
-                wrong=0;
-                unanswered=0;
-                randomize();
-                $("#start").on("click", run);}, 500);
-            
+        $("#trivia-question").append("<h2>Final Score" + " </h2>");
+        $("#help").show();
+        $("#help").html("<button id= 'start'>Play again?" + " </button>");
+        setTimeout(function () {
+            j = 0;
+            correct = 0;
+            wrong = 0;
+            unanswered = 0;
+            questionsLeft = 10;
+            randomize();
+            $("#start").on("click", run);
+        }, 500);
     }
-    else {
+
+    span.onclick = function () {
+        overModal.style.display = "none";
+        $("#countdown").hide();
+        $("#correctText").html("<h2>Correct answers: " + correct + "</h2>");
+        $("#wrongText").html("<h2>Wrong answers: " + wrong + "</h2>");
+        $("#unansweredText").html("<h2>Unanswered: " + unanswered + "</h2>");
+        $("#questionsleftText").html("<h2>Questions left: " + questionsLeft + "</h2>");
+        $("#trivia-question").empty();
+        $("#show-number").empty();
+        $("#trivia-question").append("<h2>Final Score" + " </h2>");
+        $("#help").append("<button id= 'start'>Play again?" + " </button>");
+        setTimeout(function () {
+            j = 0;
+            correct = 0;
+            wrong = 0;
+            unanswered = 0;
+            questionsLeft = 10;
+            randomize();
+            $("#start").on("click", run);
+        }, 500);
+    }
+
+    window.onclick = function (event) {
+        if (event.target == overModal) {
+            overModal.style.display = "none";
+            $("#countdown").hide();
+            $("#correctText").html("<h2>Correct answers: " + correct + "</h2>");
+            $("#wrongText").html("<h2>Wrong answers: " + wrong + "</h2>");
+            $("#unansweredText").html("<h2>Unanswered: " + unanswered + "</h2>");
+            $("#questionsleftText").html("<h2>Questions left: " + questionsLeft + "</h2>");
+            $("#trivia-question").empty();
+            $("#show-number").empty();
+            $("#trivia-question").append("<h2>Final Score" + " </h2>");
+            $("#help").append("<button id= 'start'>Play again?" + " </button>");
+            setTimeout(function () {
+                j = 0;
+                correct = 0;
+                wrong = 0;
+                unanswered = 0;
+                questionsLeft = 10;
+                randomize();
+                $("#start").on("click", run);
+            }, 500);
+        }
+    }
+}
+
+function renderTrivia() {
+    this.triviaUsed = objKeys[j];
+    if (j === 10) {
+        gameOverModal();
+    } else {
         document.querySelector("#trivia-question").innerHTML = this.triviaChoices[this.triviaUsed].question;
         $("#correctText").html("<h2>Correct answers: " + correct + "</h2>");
         $("#wrongText").html("<h2>Wrong answers: " + wrong + "</h2>");
         $("#unansweredText").html("<h2>Unanswered: " + unanswered + "</h2>");
+        $("#questionsleftText").html("<h2>Questions left: " + questionsLeft + "</h2>");
         for (var i = 0; i < this.triviaChoices[this.triviaUsed].answers.length; i++) {
             var answerBtn = $("<button>");
             answerBtn.addClass("answer-button");
@@ -156,8 +242,7 @@ function renderTrivia() {
             answerBtn.text(this.triviaChoices[this.triviaUsed].answers[i]);
             if ((this.triviaChoices[this.triviaUsed].answers[i]) === (this.triviaChoices[this.triviaUsed].correctAnswer)) {
                 answerBtn.attr("data-correct", "true");
-            }
-            else {
+            } else {
                 answerBtn.attr("data-correct", "false");
             }
             $("#buttons").append(answerBtn);
@@ -171,32 +256,18 @@ function renderTrivia() {
             stop();
             if (rightAnswer === "true") {
                 correct++
-                $("#trivia-question").append(
-                    "<h2>" + $(this).attr("data-answer") +
-                    " is right</h2>");
-                $("#trivia-question").append(
-                    "<img src='assets/images/" + triviaChoices[triviaUsed].picture + "' alt='" +
-                    triviaChoices[triviaUsed].correctAnswer +
-                    "'>");
+                $("#trivia-question").append("<h2>" + $(this).attr("data-answer") + " is right</h2>");
+                $("#trivia-question").append("<img src='assets/images/" + triviaChoices[triviaUsed].picture + "' alt='" + triviaChoices[triviaUsed].correctAnswer + "'>");
                 setTimeout(function () { restart(); }, 2000);
                 j++;
-                
-            }
-            else {
+            } else {
                 wrong++
                 $("#trivia-question").append(
-                    "<h2>" + $(this).attr("data-answer") +
-                    " is wrong</h2>");
-                $("#trivia-question").append(
-                    "<h2>" + triviaChoices[triviaUsed].correctAnswer +
-                    " is right</h2>");
-                $("#trivia-question").append(
-                    "<img src='assets/images/" + triviaChoices[triviaUsed].picture + "' alt='" +
-                    triviaChoices[triviaUsed].correctAnswer +
-                    "'>");
+                    "<h2>" + $(this).attr("data-answer") + " is wrong</h2>");
+                $("#trivia-question").append("<h2> The correct answer is " + triviaChoices[triviaUsed].correctAnswer + "</h2>");
+                $("#trivia-question").append("<img src='assets/images/" + triviaChoices[triviaUsed].picture + "' alt='" + triviaChoices[triviaUsed].correctAnswer + "'>");
                 setTimeout(function () { restart(); }, 2000);
                 j++;
-               
             };
         })
     }
@@ -209,7 +280,7 @@ function run() {
         clearInterval(intervalId);
         intervalId = setInterval(decrement, 1000);
         clockRunning = true;
-        $("#help").empty();
+        $("#help").hide();
         decrement();
         renderTrivia();
     }
@@ -217,22 +288,10 @@ function run() {
 
 function decrement() {
     number--;
-    $("#show-number").html("<h2>Time Remaining: " + number + "</h2>");
+    $("#countdown").show();
+    $("#show-number").html("<span>" + number + "</span>");
     if (number === 0) {
-        stop();
-        alert("Time Up!");
-        $("#buttons").empty();
-        $("#trivia-question").append(
-            "<h2>Time's up!" + " </h2>");
-        $("#trivia-question").append(
-            "<h2>" + triviaChoices[triviaUsed].correctAnswer + " is right</h2>");
-        $("#trivia-question").append(
-            "<img src='assets/images/" + triviaChoices[triviaUsed].picture + "' alt='" +
-            triviaChoices[triviaUsed].correctAnswer +
-            "'>");
-        setTimeout(function () { restart(); }, 2000);
-        unanswered++
-        j++
+        timesUpModal();
     }
 }
 
@@ -240,5 +299,3 @@ function stop() {
     clearInterval(intervalId);
     clockRunning = false;
 }
-
-

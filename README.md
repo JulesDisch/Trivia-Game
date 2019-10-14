@@ -1,8 +1,12 @@
 # Trivia-Game
-the one where there's trivia
-ok. so here we have a yankees trivia game. please don't fail me for that. i can't help how i was raised. 
-I tried to do the harder option. 
-There are, perhaps, a few deviations:
-You'll see that while there is no user input required to advance after picking a correct or incorrect answer, there is an alert for the timeout. i liked this, in case someone accidentally was looking away from the game, the alert would "stop the clock" as it were, for that question. it would not keep moving them through the game. once they click "ok", they will see the "time's up!" screen, with the correct answer, and then the game continues.
-there is also an alert for "game over!" before updating the page with the final score. I also liked this because I felt there should be some "louder" indication than merely the text on the page updating, especially because my game tracks the user's correct, incorrect, and unanswered scores throughout the game.
-fun bonus thing: my ten questions will generate in a different order each time you play the game. say whaaaa?!
+The one where there's trivia. . .
+Here we have a Yankees trivia game, using JavaScript for the logic and jQuery to manipulate HTML. 
+You'll see that while there is no user input required to advance after picking a correct or incorrect answer, there is a modal for the timeout. 
+The modal will "stop the clock" as it were, for that question. It will not keep moving them through the game. 
+If the user clicks "Keep playing", they will see the correct answer, and then the game continues.
+If they click "Stop playing", they will see the start screen.
+Once the user answers (or timesout) all ten questions, they see a modal for "Game over".
+When they click "OK", the "x", or outside the modal, they see their final tally of correct, incorrect, and unanswered questions.
+If they click "Play again?", the game resets, with the trivia questions shuffled into a different order.
+You can find the deployed version here:
+https://julesdisch.github.io/Trivia-Game/index.html

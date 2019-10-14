@@ -16,14 +16,30 @@
 
 </head>
 <header>
-    <div class="container">
+    <div class="navbar">
         <a id="logo" href="#">Julia Dischell</a>
         <nav>
-            <ul>
-                <li class="links"><a href="../Responsive-Portfolio/index.html">About</a></li>
-                <li class="links"><a href="../Responsive-Portfolio/portfolio.html">Portfolio</a></li>
-                <li id="links-last-child"><a href="../Responsive-Portfolio/contact.html">Contact</a></li>
-            </ul>
+            <div class="dropdown">
+                <button class="dropbtn"><a href="../Responsive-Portfolio/index.html">About</a>
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="https://www.linkedin.com/in/juliadischell/">LinkedIn</a>
+                    <a href="assets/images/JDresume2019.pdf">Resume</a>
+                    <a href="https://github.com/JulesDisch">GitHub</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn"> <a href="../Responsive-Portfolio/contact.html">Contact</a>
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="mailto:jmdischell@gmail.com">Email</a>
+                    <a href="tel:12158962289">Call</a>
+                </div>
+            </div>
+            <a href="../Responsive-Portfolio/portfolio.html">Portfolio</a>
+
         </nav>
     </div>
 </header>
@@ -34,31 +50,68 @@
             <h1>Portfolio</h1>
             <hr>
             <div id="game">
-                <div id="one-more">
-                    <div id="title"> <span id="show-number"></span>
+                <div class="row">
+                    <div class="column-1">
                         <h2>Yankees Trivia Game</h2>
                     </div>
-                </div>
-                <div id="trivia-block">
-                    <h3 id="trivia-question">Ready to play?
-                    </h3>
-                    <div id="buttons"></div>
-                    <p><span id="correctText"></span></p>
-                    <p><span id="wrongText"></span></p>
-                    <p><span id="unansweredText"></span></p>
-                    <div id="Trivia">
+                    <div class="column-2">
+                        <h2 id="countdown">Time Remaining: <span id="show-number"></span></h2>
                     </div>
-                    <div id="help">
-                        <button id="start">Start game</button></div>
                 </div>
-                <script type="text/javascript"
-                    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-                <br>
-                <script type="text/javascript" src="assets/javascript/app.js">
-                </script>
-                <footer>
-                    <p>© 2019</p>
-                </footer>
+                <div class="row">
+                    <div id="trivia-block">
+                        <h3 id="trivia-question">Ready to play?
+                        </h3>
+                        <div id="buttons"></div>
+                        <div id="score">
+                            <div class="row">
+                                <div class="column-1">
+                                    <p><span id="correctText"></span></p>
+                                </div>
+                                <div class="column-2">
+                                    <p><span id="wrongText"></span></p>
+                                </div>
+                                <div class="column-3">
+                                    <p><span id="unansweredText"></span></p>
+                                </div>
+                                <div class="column-4">
+                                    <p><span id="questionsleftText"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="help">
+                            <button id="start">Start game</button></div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <a href="https://github.com/JulesDisch/Trivia-Game">Find on GitHub</a>
+        </section>
+    </div>
+
+    <div id="Time" class="modal">
+        <div class="modal-content">
+            <h3>Time's up!</h3>
+            <button id="continue">Keep playing</button>
+            <button id="quit"> Stop playing</button>
+        </div>
+    </div>
+
+    <div id="game-over" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Game over!</h3>
+            <button id="ok"> OK</button>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <br>
+    <script type="text/javascript" src="assets/javascript/app.js">
+    </script>
+    <footer>
+        <p>© 2019</p>
+    </footer>
 </body>
 
 </html>
