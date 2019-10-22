@@ -110,7 +110,7 @@ var objKeys = Object.keys(this.triviaChoices);
 function restart() {
     questionsLeft--;
     number = 30;
-    $("#show-number").html("<h2>Time Remaining: " + number + "</h2>");
+    $("#show-number").html(number);
     run();
 }
 
@@ -291,7 +291,7 @@ function run() {
 function decrement() {
     number--;
     $("#countdown").show();
-    $("#show-number").html("<span>" + number + "</span>");
+    $("#show-number").html(number);
     if (number === 0) {
         timesUpModal();
     }
